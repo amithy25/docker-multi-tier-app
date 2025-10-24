@@ -1,20 +1,19 @@
-# Use official Node.js LTS image
+# ---- Build Stage ----
 FROM node:18-alpine
 
-# Set working directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json
+# Copy only dependency files first
 COPY package*.json ./
 
 # Install dependencies
-RUN npm install --production
+RUN npm ci
 
-# Copy backend source code
+# Copy the rest of the code
 COPY . .
 
-# Expose backend port (change if your backend uses a different port)
+# Expose port 5000
 EXPOSE 5000
 
-# Start the backend server
 CMD ["npm", "start"]
+
